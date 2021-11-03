@@ -1,7 +1,7 @@
 package hu.bme.aut.stringartdesigner.model
 
 data class Pattern (
-    var polygon: Polygon,
-    var points: List<Point>,
-    var lines: List<Line>
+    val points: MutableList<Point> = mutableListOf(),
+    val lines: MutableList<Line> = mutableListOf(),
+    val polygon: Polygon = Polygon(),
 )
