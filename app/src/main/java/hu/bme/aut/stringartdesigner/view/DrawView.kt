@@ -11,36 +11,32 @@ import hu.bme.aut.stringartdesigner.model.*
 class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
 
     private var paint: Paint = Paint()
-    private var pattern: Pattern
     init {
         paint.color = Color.GREEN
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 5F
-        pattern = Pattern()
+        paint.strokeWidth = 2F
         invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for (point in pattern.points) {
+        for (line in Pattern.polygon.getEdges()) {
+            drawLine(canvas,line)
+        }
+        for (point in Pattern.points) {
             drawPoint(canvas, point)
         }
-        for (line in pattern.lines) {
+        for (line in Pattern.lines) {
             drawLine(canvas, line)
         }
     }
 
     private fun drawPoint(canvas: Canvas, point: Point) {
-        canvas.drawPoint(point.pos.x, point.pos.y,paint)
+        //paint.textSize = 30F
+        canvas.drawCircle(point.pos.x, point.pos.y,5F, paint)
     }
 
     private fun drawLine(canvas: Canvas, line: Line) {
         canvas.drawLine(line.start.x, line.start.y, line.end.x, line.end.y, paint)
     }
-
-    fun loadPattern(pattern: Pattern) {
-        this.pattern = pattern
-        invalidate()
-    }
-
 }
