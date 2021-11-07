@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StringArtDesigner</string>
+    <string name="hint_polygon_n">Vertices of polygon</string>
+    <string name="hint_points">Number of points on edges</string>
 </resources>
