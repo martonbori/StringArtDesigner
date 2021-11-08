@@ -6,7 +6,9 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import hu.bme.aut.stringartdesigner.model.*
+import hu.bme.aut.stringartdesigner.model.geometry.Line
+import hu.bme.aut.stringartdesigner.model.geometry.Pattern
+import hu.bme.aut.stringartdesigner.model.geometry.Point
 
 class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
 
@@ -23,7 +25,7 @@ class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
         for (line in Pattern.polygon.getEdges()) {
             drawLine(canvas,line)
         }
-        for (point in Pattern.points) {
+        for (point in Pattern.points.values) {
             drawPoint(canvas, point)
         }
         for (line in Pattern.lines) {
@@ -32,7 +34,8 @@ class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
     }
 
     private fun drawPoint(canvas: Canvas, point: Point) {
-        //paint.textSize = 30F
+//        paint.textSize = 30F
+//        canvas.drawText(point.n.toString(),point.pos.x, point.pos.y, paint)
         canvas.drawCircle(point.pos.x, point.pos.y,5F, paint)
     }
 
