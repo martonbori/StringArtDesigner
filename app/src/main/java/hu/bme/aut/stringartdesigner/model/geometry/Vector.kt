@@ -1,4 +1,4 @@
-package hu.bme.aut.stringartdesigner.model
+package hu.bme.aut.stringartdesigner.model.geometry
 
 import kotlin.math.pow
 import kotlin.math.sqrt

@@ -1,4 +1,4 @@
-package hu.bme.aut.stringartdesigner.model
+package hu.bme.aut.stringartdesigner.model.geometry
 
 data class Position (
     var x: Float,
@@ -7,7 +7,7 @@ data class Position (
     fun translateBy(deltaX: Int, deltaY: Int) : Position {
         return Position(x + deltaX, y + deltaY)
     }
-    fun translateBy(vector: Vector) : Position{
+    fun translateBy(vector: Vector) : Position {
         return Position(x + vector.x, y + vector.y)
     }
 }
