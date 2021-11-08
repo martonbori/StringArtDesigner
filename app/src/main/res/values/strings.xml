@@ -2,4 +2,6 @@
     <string name="app_name">StringArtDesigner</string>
     <string name="hint_polygon_n">Vertices of polygon</string>
     <string name="hint_points">Number of points on edges</string>
+    <string name="hint_points_function">Endpoint number function (given x = start point number)</string>
+    <string name="hint_edges_function">End point edge function (given e = start point edge)</string>
 </resources>
