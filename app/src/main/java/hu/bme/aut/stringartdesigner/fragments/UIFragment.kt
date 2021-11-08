@@ -8,12 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import hu.bme.aut.stringartdesigner.MainActivity
-import hu.bme.aut.stringartdesigner.R
-import hu.bme.aut.stringartdesigner.databinding.ActivityMainBinding
 import hu.bme.aut.stringartdesigner.databinding.FragmentUIBinding
-import hu.bme.aut.stringartdesigner.model.Pattern
-import hu.bme.aut.stringartdesigner.model.Polygon
+import hu.bme.aut.stringartdesigner.model.geometry.Pattern
 
 class UIFragment : Fragment() {
     lateinit var binding: FragmentUIBinding
@@ -45,7 +43,22 @@ class UIFragment : Fragment() {
                 callBack.updateCanvas()
             }
         })
+        binding.edgesFunction.setOnFocusChangeListener { _, b ->
+            if(!b) patternFunctionsChanged()
+        }
+        binding.pointsFunction.setOnFocusChangeListener { _, b ->
+            if(!b) patternFunctionsChanged()
+        }
         return binding.root
+    }
+
+    private fun patternFunctionsChanged() {
+        val pointsFunctionStr = binding.pointsFunction.text.toString()
+        val edgesFunctionStr = binding.edgesFunction.text.toString()
+        if(pointsFunctionStr.isNotBlank() && edgesFunctionStr.isNotBlank()) {
+            Pattern.setLines(edgesFunctionStr, pointsFunctionStr)
+            callBack.updateCanvas()
+        }
     }
 
     override fun onAttach(context: Context) {
