@@ -1,6 +1,9 @@
 package hu.bme.aut.stringartdesigner.model.geometry
 
 import com.notkamui.keval.Keval
+import com.notkamui.keval.Keval.Companion.eval
+import hu.bme.aut.matheval.MathEval
+import hu.bme.aut.matheval.Variable
 import kotlin.math.min
 import java.util.*
 
@@ -10,8 +13,8 @@ object Pattern {
     val lines: MutableList<Line> = mutableListOf()
     var polygon: Polygon = Polygon()
     var pointCount: Int = 0
-    private var edgeExpression: String = ""
-    private var numExpression: String = ""
+    private var edgeExpression: MathEval = MathEval("edge+num")
+    private var numExpression: MathEval = MathEval("num")
     private var canvasCenter: Position = Position(0F,0F)
     private var maxSize: Int = 0
 
@@ -26,7 +29,7 @@ object Pattern {
                     Point(startPos.translateBy(e.getDirectionVector()*(gap*(i+1))),j,i)
             }
         }
-        setLines(edgeExpression, numExpression)
+        setLines()
     }
 
     fun setPolygon(polygonN: Int) {
@@ -34,15 +37,13 @@ object Pattern {
         setPoints(pointCount)
     }
 
-    fun setLines(edgeExpression: String, numExpression: String) {
-        this.edgeExpression = edgeExpression
-        this.numExpression = numExpression
-        if (this.edgeExpression.isBlank() || this.numExpression.isBlank())
-            return
+    fun setLines() {
         lines.clear()
         for (p in points) {
             val point = p.value
-            val keval = Keval {
+            val edge = point.edge.toDouble()
+            val num = point.n.toDouble()
+/*            val keval = Keval {
                 includeDefault()
                 constant {
                     name = "edge"
@@ -52,15 +53,27 @@ object Pattern {
                     name = "num"
                     value = point.n.toDouble()
                 }
-            }
-            val endpointNum = keval.eval(numExpression).toInt()
-            val endpointEdge = keval.eval(edgeExpression).toInt() % polygon.vertices.size
+            }*/
+
+            val endpointNum = this.numExpression.eval(Variable("edge",edge), Variable("num",num)).toInt()
+            val endpointEdge = this.edgeExpression.eval(Variable("edge",edge), Variable("num",num)).toInt() % polygon.vertices.size
             val endPoint = points[Pair(endpointEdge, endpointNum)]
             if (endPoint != null) {
                 lines.add(Line(point.pos, endPoint.pos))
             }
         }
     }
+
+    fun setEdgeExpression(expr: String) {
+        edgeExpression.setExpression(expr)
+        setLines()
+    }
+
+    fun setPointExpression(expr: String) {
+        numExpression.setExpression(expr)
+        setLines()
+    }
+
 
     fun getPoint(edge: Int, num: Int) : Point? {
         return points[Pair(edge,num)]

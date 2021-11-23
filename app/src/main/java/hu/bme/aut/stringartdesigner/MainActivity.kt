@@ -2,12 +2,9 @@ package hu.bme.aut.stringartdesigner
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
-import hu.bme.aut.stringartdesigner.R
 import hu.bme.aut.stringartdesigner.databinding.ActivityMainBinding
 import hu.bme.aut.stringartdesigner.fragments.CanvasFragment
 import hu.bme.aut.stringartdesigner.fragments.UIFragment
-import hu.bme.aut.stringartdesigner.model.*
 
 class MainActivity : AppCompatActivity(), UIFragment.PatternChanged {
 
