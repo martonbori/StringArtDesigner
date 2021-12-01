@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.GeneralSettingsFragment">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/general_settings_hint"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/edge_label_num_func"
+                android:text="@string/vertices_count_hint"
+                android:layout_gravity="center"
+                android:textSize="8pt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <NumberPicker
+                android:id="@+id/polygon_n"
+                android:inputType="number"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/hint_polygon_n" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/num_label_num_func"
+                android:text="@string/points_count_hint"
+                android:textSize="8pt"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <NumberPicker
+                android:id="@+id/points"
+                android:inputType="number"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/hint_points"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

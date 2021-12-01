@@ -4,4 +4,13 @@
     <string name="hint_points">Number of points on edges</string>
     <string name="hint_points_function">Endpoint number function (given x = start point number)</string>
     <string name="hint_edges_function">End point edge function (given e = start point edge)</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="general_settings_hint">N: vertices of polygon\nn: Number of points on edges</string>
+    <string name="vertices_count_hint">N</string>
+    <string name="points_count_hint">n</string>
+    <string name="number_function_hint">Number of endpoint =\n A * {edge of start point} + B * {num of start point} + C</string>
+    <string name="constant_A">A</string>
+    <string name="constant_B">B</string>
+    <string name="constant_C">C</string>
+    <string name="edge_function_hint">Edge of endpoint =\n A * {edge of start point} + B * {num of start point} + C</string>
 </resources>

@@ -84,8 +84,8 @@ object Pattern {
     }
 
     fun setSize(widthPixels: Int, heightPixels: Int) {
-        canvasCenter = Position(widthPixels.toFloat()/2, heightPixels.toFloat()/3)
-        maxSize = min(widthPixels, heightPixels) /2 -50
+        canvasCenter = Position(widthPixels.toFloat()/2, heightPixels.toFloat()/2)
+        maxSize = min(widthPixels, heightPixels) /2 - 50
         setPolygon(polygon.vertices.size)
     }
 

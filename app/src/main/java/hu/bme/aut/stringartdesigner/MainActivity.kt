@@ -5,8 +5,9 @@ import android.os.Bundle
 import hu.bme.aut.stringartdesigner.databinding.ActivityMainBinding
 import hu.bme.aut.stringartdesigner.fragments.CanvasFragment
 import hu.bme.aut.stringartdesigner.fragments.UIFragment
+import hu.bme.aut.stringartdesigner.model.geometry.Pattern
 
-class MainActivity : AppCompatActivity(), UIFragment.PatternChanged {
+class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
 
     lateinit var binding : ActivityMainBinding
     lateinit var canvasFragment: CanvasFragment
