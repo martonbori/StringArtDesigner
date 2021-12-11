@@ -80,7 +80,7 @@ object DbConstants {
             ${Columns.START_X.name} real not null,
             ${Columns.START_Y.name} real not null,
             ${Columns.END_X.name} real not null,
-            ${Columns.END_Y.name} real not null,
+            ${Columns.END_Y.name} real not null
             );"""
 
         private const val DATABASE_DROP = "drop table if exists $DATABASE_TABLE;"
