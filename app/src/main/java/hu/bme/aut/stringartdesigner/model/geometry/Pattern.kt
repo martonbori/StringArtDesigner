@@ -37,23 +37,12 @@ object Pattern {
         setPoints(pointCount)
     }
 
-    fun setLines() {
+    private fun setLines() {
         lines.clear()
         for (p in points) {
             val point = p.value
             val edge = point.edge.toDouble()
             val num = point.n.toDouble()
-/*            val keval = Keval {
-                includeDefault()
-                constant {
-                    name = "edge"
-                    value = point.edge.toDouble()
-                }
-                constant {
-                    name = "num"
-                    value = point.n.toDouble()
-                }
-            }*/
 
             val endpointNum = this.numExpression.eval(Variable("edge",edge), Variable("num",num)).toInt()
             val endpointEdge = this.edgeExpression.eval(Variable("edge",edge), Variable("num",num)).toInt() % polygon.vertices.size
@@ -62,6 +51,14 @@ object Pattern {
                 lines.add(Line(point.pos, endPoint.pos))
             }
         }
+    }
+
+    fun addLine(line: Line) {
+        lines.add(line)
+    }
+
+    fun addLine(startPos: Position, endPos: Position) {
+        lines.add(Line(startPos, endPos))
     }
 
     fun setEdgeExpression(expr: String) {
@@ -85,7 +82,7 @@ object Pattern {
 
     fun setSize(widthPixels: Int, heightPixels: Int) {
         canvasCenter = Position(widthPixels.toFloat()/2, heightPixels.toFloat()/2)
-        maxSize = min(widthPixels, heightPixels) /2 - 50
+        maxSize = min(widthPixels, heightPixels) /2 - 25
         setPolygon(polygon.vertices.size)
     }
 

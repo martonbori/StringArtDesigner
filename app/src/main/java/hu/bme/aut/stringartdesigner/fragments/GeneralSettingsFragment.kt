@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import hu.bme.aut.stringartdesigner.MainActivity
 import hu.bme.aut.stringartdesigner.databinding.FragmentGeneralSettingsBinding
 import hu.bme.aut.stringartdesigner.model.geometry.Pattern
+import hu.bme.aut.stringartdesigner.view.DrawView
 
 class GeneralSettingsFragment : Fragment() {
     lateinit var binding: FragmentGeneralSettingsBinding
@@ -32,6 +33,12 @@ class GeneralSettingsFragment : Fragment() {
             Pattern.setPoints(newVal)
             callBack.updateCanvas()
         }
+
+        val sandboxMode = binding.sandbox
+        sandboxMode.setOnCheckedChangeListener { btn, b ->
+            DrawView.sandboxMode = b
+        }
+
         return binding.root
     }
 

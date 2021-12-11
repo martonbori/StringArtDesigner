@@ -13,4 +13,5 @@
     <string name="constant_B">B</string>
     <string name="constant_C">C</string>
     <string name="edge_function_hint">Edge of endpoint =\n A * {edge of start point} + B * {num of start point} + C</string>
+    <string name="sandbox_mode">Sandbox mode</string>
 </resources>

@@ -3,12 +3,13 @@ package hu.bme.aut.stringartdesigner.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import hu.bme.aut.stringartdesigner.databinding.FragmentCanvasBinding
 import hu.bme.aut.stringartdesigner.model.geometry.Pattern
 
-class CanvasFragment : Fragment() {
+class CanvasFragment : Fragment(){
 
     lateinit var binding : FragmentCanvasBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
@@ -28,5 +29,6 @@ class CanvasFragment : Fragment() {
     fun update() {
         binding.drawView.invalidate()
     }
+
 
 }
