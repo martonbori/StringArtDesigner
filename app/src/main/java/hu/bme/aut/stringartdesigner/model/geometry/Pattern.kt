@@ -9,8 +9,8 @@ import java.util.*
 
 
 object Pattern {
-    val points: MutableMap<Pair<Int,Int>, Point> = mutableMapOf()
-    val lines: MutableList<Line> = mutableListOf()
+    var points: MutableMap<Pair<Int,Int>, Point> = mutableMapOf()
+    var lines: MutableList<Line> = mutableListOf()
     var polygon: Polygon = Polygon()
     var pointCount: Int = 0
     private var edgeExpression: MathEval = MathEval("edge+num")
@@ -84,6 +84,15 @@ object Pattern {
         canvasCenter = Position(widthPixels.toFloat()/2, heightPixels.toFloat()/2)
         maxSize = min(widthPixels, heightPixels) /2 - 25
         setPolygon(polygon.vertices.size)
+    }
+
+    fun restoreObjects(polygon: Polygon, points: MutableList<Point>, lines: MutableList<Line>) {
+        this.polygon = polygon
+        this.points.clear()
+        for(point in points) {
+            this.points[Pair(point.edge, point.n)] = point
+        }
+        this.lines = lines
     }
 
 
