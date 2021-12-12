@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import hu.bme.aut.stringartdesigner.databinding.ActivityMainBinding
-import hu.bme.aut.stringartdesigner.fragments.CanvasFragment
-import hu.bme.aut.stringartdesigner.fragments.UIFragment
+import hu.bme.aut.stringartdesigner.fragments.*
 import hu.bme.aut.stringartdesigner.model.geometry.Pattern
+import hu.bme.aut.stringartdesigner.sqlite.DbConstants
 import hu.bme.aut.stringartdesigner.sqlite.PersistentDataHelper
 
 class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
@@ -49,16 +49,22 @@ class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
     }
 
     private fun onExit() {
-        dataHelper.persistPolygon(Pattern.polygon)
-        dataHelper.persistPoints(Pattern.points.values.toList())
-        dataHelper.persistLines(Pattern.lines)
-        dataHelper.close()
+        savePersistentObjects()
         finish()
     }
 
+    private fun savePersistentObjects() {
+        dataHelper.persistPolygon(Pattern.polygon)
+        dataHelper.persistPoints(Pattern.points.values.toList())
+        dataHelper.persistLines(Pattern.lines)
+        dataHelper.persistPlusLines(Pattern.plusLines)
+        dataHelper.close()
+    }
+
     private fun restorePersistedObjects() {
-        Pattern.restoreObjects(dataHelper.restorePolygon(), dataHelper.restorePoints(), dataHelper.restoreLines())
+        Pattern.restoreObjects(dataHelper.restorePolygon(), dataHelper.restorePoints(), dataHelper.restoreLines(), dataHelper.restorePlusLines())
         updateCanvas()
+
     }
 
 }

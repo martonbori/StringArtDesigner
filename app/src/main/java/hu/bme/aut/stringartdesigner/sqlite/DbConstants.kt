@@ -6,7 +6,7 @@ import android.util.Log
 
 object DbConstants {
     const val DATABASE_NAME = "stringartdesigner.db"
-    const val DATABASE_VERSION = 1
+    const val DATABASE_VERSION = 2
 
     object Polygon {
         const val DATABASE_TABLE = "polygonvertices"
@@ -72,7 +72,7 @@ object DbConstants {
         const val DATABASE_TABLE = "lines"
 
         enum class Columns {
-            ID, START_X, START_Y, END_X, END_Y
+            ID, START_X, START_Y, END_X, END_Y, BY_HAND
         }
 
         private val DATABASE_CREATE ="""create table if not exists $DATABASE_TABLE (
@@ -80,7 +80,8 @@ object DbConstants {
             ${Columns.START_X.name} real not null,
             ${Columns.START_Y.name} real not null,
             ${Columns.END_X.name} real not null,
-            ${Columns.END_Y.name} real not null
+            ${Columns.END_Y.name} real not null,
+            ${Columns.BY_HAND.name} integer not null
             );"""
 
         private const val DATABASE_DROP = "drop table if exists $DATABASE_TABLE;"

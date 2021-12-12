@@ -42,6 +42,9 @@ class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
         for (line in Pattern.lines) {
             drawLine(canvas, line)
         }
+        for (line in Pattern.plusLines) {
+            drawLine(canvas, line)
+        }
         currentLine?.let { drawLine(canvas, it) }
     }
 

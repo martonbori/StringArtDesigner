@@ -126,6 +126,7 @@ class PersistentDataHelper(context: Context) {
             values.put(DbConstants.Lines.Columns.START_Y.name, line.start.y)
             values.put(DbConstants.Lines.Columns.END_X.name, line.end.x)
             values.put(DbConstants.Lines.Columns.END_Y.name, line.end.y)
+            values.put(DbConstants.Lines.Columns.BY_HAND.name, 0)
             database!!.insert(DbConstants.Lines.DATABASE_TABLE, null, values)
         }
     }
@@ -158,5 +159,36 @@ class PersistentDataHelper(context: Context) {
             cursor.getFloat(DbConstants.Lines.Columns.END_Y.ordinal)
         )
         return Line(startPos, endPos)
+    }
+
+    fun persistPlusLines(plusLines: List<Line>) {
+        clearPlusLines()
+        for (line in plusLines) {
+            val values = ContentValues()
+            values.put(DbConstants.Lines.Columns.START_X.name, line.start.x)
+            values.put(DbConstants.Lines.Columns.START_Y.name, line.start.y)
+            values.put(DbConstants.Lines.Columns.END_X.name, line.end.x)
+            values.put(DbConstants.Lines.Columns.END_Y.name, line.end.y)
+            values.put(DbConstants.Lines.Columns.BY_HAND.name, 1)
+            database!!.insert(DbConstants.Lines.DATABASE_TABLE, null, values)
+        }
+    }
+
+    fun restorePlusLines(): MutableList<Line> {
+        val lines: MutableList<Line> = ArrayList()
+        val cursor: Cursor =
+            database!!.query(DbConstants.Lines.DATABASE_TABLE, lineColumns, "BY_HAND = 1", null, null, null, null)
+        cursor.moveToFirst()
+        while (!cursor.isAfterLast) {
+            val line: Line = cursorToLine(cursor)
+            lines.add(line)
+            cursor.moveToNext()
+        }
+        cursor.close()
+        return lines
+    }
+
+    fun clearPlusLines() {
+        database!!.delete(DbConstants.Lines.DATABASE_TABLE, "BY_HAND = 1", null)
     }
 }

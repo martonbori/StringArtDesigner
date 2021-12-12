@@ -11,6 +11,7 @@ import java.util.*
 object Pattern {
     var points: MutableMap<Pair<Int,Int>, Point> = mutableMapOf()
     var lines: MutableList<Line> = mutableListOf()
+    var plusLines: MutableList<Line> = mutableListOf()
     var polygon: Polygon = Polygon()
     var pointCount: Int = 0
     private var edgeExpression: MathEval = MathEval("edge+num")
@@ -55,11 +56,11 @@ object Pattern {
     }
 
     fun addLine(line: Line) {
-        lines.add(line)
+        plusLines.add(line)
     }
 
     fun addLine(startPos: Position, endPos: Position) {
-        lines.add(Line(startPos, endPos))
+        plusLines.add(Line(startPos, endPos))
     }
 
     fun setEdgeExpression(expr: String) {
@@ -109,13 +110,14 @@ object Pattern {
         }
     }
 
-    fun restoreObjects(polygon: Polygon, points: MutableList<Point>, lines: MutableList<Line>) {
+    fun restoreObjects(polygon: Polygon, points: MutableList<Point>, lines: MutableList<Line>, plusLines: MutableList<Line>) {
         this.polygon = polygon
         this.points.clear()
         for(point in points) {
             this.points[Pair(point.edge, point.n)] = point
         }
         this.lines = lines
+        this.plusLines = plusLines
     }
 
 
