@@ -55,11 +55,14 @@ object Pattern {
         }
     }
 
-    fun addLine(line: Line) {
+    fun addPlusLine(line: Line) {
         plusLines.add(line)
     }
+    fun clearPlusLines() {
+        plusLines.clear()
+    }
 
-    fun addLine(startPos: Position, endPos: Position) {
+    fun addPlusLine(startPos: Position, endPos: Position) {
         plusLines.add(Line(startPos, endPos))
     }
 
