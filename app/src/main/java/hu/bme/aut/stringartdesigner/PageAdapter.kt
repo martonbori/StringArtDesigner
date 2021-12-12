@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import hu.bme.aut.stringartdesigner.fragments.EdgeFunctionSettingsFragment
 import hu.bme.aut.stringartdesigner.fragments.GeneralSettingsFragment
-import hu.bme.aut.stringartdesigner.fragments.NumberFunctionSettingsFragment
+import hu.bme.aut.stringartdesigner.fragments.PointFunctionSettingsFragment
 
 class PageAdapter(fm:FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
@@ -21,7 +21,7 @@ class PageAdapter(fm:FragmentManager) : FragmentPagerAdapter(fm) {
                 EdgeFunctionSettingsFragment()
             }
             2 -> {
-                NumberFunctionSettingsFragment()
+                PointFunctionSettingsFragment()
             }
             else -> {
                 GeneralSettingsFragment()

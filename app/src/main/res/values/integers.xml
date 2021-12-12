@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="default_value_edge_constant_A">1</integer>
+    <integer name="default_value_edge_constant_B">1</integer>
+    <integer name="default_value_edge_constant_C">0</integer>
+    <integer name="default_value_polygonN">4</integer>
+    <integer name="default_value_number_of_points">10</integer>
+    <integer name="default_value_point_constant_A">0</integer>
+    <integer name="default_value_point_constant_B">1</integer>
+    <integer name="default_value_point_constant_C">1</integer>
+</resources>
