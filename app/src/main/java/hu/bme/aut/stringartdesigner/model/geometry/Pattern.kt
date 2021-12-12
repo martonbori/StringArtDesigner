@@ -17,6 +17,7 @@ object Pattern {
     private var numExpression: MathEval = MathEval("num")
     private var canvasCenter: Position = Position(0F,0F)
     private var maxSize: Int = 0
+    private var patternCenter: Position? = null
 
     fun setPoints(pointCnt: Int) {
         points.clear()
@@ -80,10 +81,32 @@ object Pattern {
         return Collections.unmodifiableCollection(points.values)
     }
 
-    fun setSize(widthPixels: Int, heightPixels: Int) {
-        canvasCenter = Position(widthPixels.toFloat()/2, heightPixels.toFloat()/2)
+    fun translateTo(x: Int, y: Int) {
+        translateBy(Vector(x - canvasCenter.x, y - canvasCenter.y))
+    }
+
+    fun translateBy(vector: Vector) {
+        canvasCenter = canvasCenter.translateBy(vector)
+        polygon.translateBy(vector)
+        for(point in points.values) {
+            point.translateBy(vector)
+        }
+        for (line in lines) {
+            line.translateBy(vector)
+        }
+    }
+
+    fun scaleTo(widthPixels: Int, heightPixels: Int) {
+        val prevSize = maxSize
         maxSize = min(widthPixels, heightPixels) /2 - 25
-        setPolygon(polygon.vertices.size)
+        scaleBy(maxSize.toFloat()/prevSize)
+    }
+
+    fun scaleBy(alpha:Float) {
+        for (point in points.values) {
+            val fromCenterToPoint = Line (canvasCenter, point.pos)
+            point.pos = point.pos.translateBy(fromCenterToPoint.getDirectionVector()*fromCenterToPoint.getLength()*(alpha-1))
+        }
     }
 
     fun restoreObjects(polygon: Polygon, points: MutableList<Point>, lines: MutableList<Line>) {

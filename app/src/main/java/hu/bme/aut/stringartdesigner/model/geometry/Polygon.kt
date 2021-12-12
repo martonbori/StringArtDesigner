@@ -28,4 +28,9 @@ data class Polygon(var vertices: MutableList<Position> = mutableListOf()) {
         }
         return lines
     }
+    fun translateBy(vector: Vector)  {
+        for(v in vertices) {
+            v.translateBy(vector)
+        }
+    }
 }

@@ -11,5 +11,8 @@ data class Line(var start: Position, var end: Position) {
     fun getDirectionVector() : Vector {
         return Vector(start, end).normalize()
     }
-
+    fun translateBy(vector: Vector)  {
+        start.translateBy(vector)
+        end.translateBy(vector)
+    }
 }

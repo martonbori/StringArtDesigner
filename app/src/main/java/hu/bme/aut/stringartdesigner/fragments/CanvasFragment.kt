@@ -19,7 +19,8 @@ class CanvasFragment : Fragment(){
         binding.root.post {
             val height: Int = binding.root.measuredHeight
             val width: Int = binding.root.measuredWidth
-            Pattern.setSize(width, height)
+            Pattern.translateTo(width/2, height/2)
+            Pattern.scaleTo(width, height)
             update()
         }
 

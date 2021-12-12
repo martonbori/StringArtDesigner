@@ -6,4 +6,7 @@ data class Point (
     var n: Int
 ) {
     constructor(x:Float, y:Float, edge:Int = -1, num:Int = -1) : this(Position(x,y),edge,num)
+    fun translateBy(vector: Vector)  {
+        pos = Position(pos.x + vector.x, pos.y + vector.y)
+    }
 }
