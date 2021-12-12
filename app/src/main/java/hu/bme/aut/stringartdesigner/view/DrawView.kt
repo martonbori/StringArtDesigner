@@ -68,7 +68,7 @@ class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
                     currentLine = Line(startPosition!!, endPosition!!)
                 }
                 MotionEvent.ACTION_UP -> {
-                    Pattern.addLine(currentLine!!)
+                    Pattern.addPlusLine(currentLine!!)
                     startPosition = null
                     endPosition = null
                     currentLine = null
