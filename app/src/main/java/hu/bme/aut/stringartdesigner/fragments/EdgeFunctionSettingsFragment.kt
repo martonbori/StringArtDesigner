@@ -97,5 +97,6 @@ class EdgeFunctionSettingsFragment : Fragment(), MainActivity.IMenuEventListener
         binding.edgeConstantB.value = sharedPreferences.getInt("edge_constant_B",default)
         default = resources.getInteger(R.integer.default_value_edge_constant_C)
         binding.edgeConstantC.value = sharedPreferences.getInt("edge_constant_C",default)
+        patternFunctionsChanged()
     }
 }

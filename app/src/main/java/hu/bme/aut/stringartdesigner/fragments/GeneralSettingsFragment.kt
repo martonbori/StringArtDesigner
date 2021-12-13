@@ -88,11 +88,22 @@ class GeneralSettingsFragment : Fragment(), MainActivity.IMenuEventListener {
     override fun loadPattern(name: String) {
         val sharedPreferences = requireActivity().getSharedPreferences(name,Context.MODE_PRIVATE)
         val defaultPN:Int = resources.getInteger(R.integer.default_value_polygonN)
-        binding.polygonN.value = sharedPreferences.getInt("polygon_n",defaultPN)
+        val newPNVal = sharedPreferences.getInt("polygon_n",defaultPN)
+        binding.polygonN.value = newPNVal
+        Pattern.setPolygon(newPNVal)
+
         val defaultPC:Int = resources.getInteger(R.integer.default_value_number_of_points)
-        binding.points.value = sharedPreferences.getInt("point_count",defaultPC)
+        val newPCVal = sharedPreferences.getInt("point_count",defaultPC)
+        binding.points.value = newPCVal
+        Pattern.setPoints(newPCVal)
+
         val defaultSM:Boolean = resources.getBoolean(R.bool.default_value_sandbox_mode)
-        binding.sandbox.isChecked = sharedPreferences.getBoolean("sandbox_ode",defaultSM)
+        val newSMVal = sharedPreferences.getBoolean("sandbox_mode",defaultSM)
+        binding.sandbox.isChecked = newSMVal
+        if(!newSMVal) Pattern.clearPlusLines()
+        DrawView.sandboxMode = newSMVal
+
+        callBack.updateCanvas()
     }
 
 }

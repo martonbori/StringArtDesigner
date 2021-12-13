@@ -97,5 +97,6 @@ class PointFunctionSettingsFragment : Fragment(), MainActivity.IMenuEventListene
         binding.pointConstantB.value = sharedPreferences.getInt("point_constant_B",default)
         default = resources.getInteger(R.integer.default_value_point_constant_C)
         binding.pointConstantC.value = sharedPreferences.getInt("point_constant_C",default)
+        patternFunctionsChanged()
     }
 }
