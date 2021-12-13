@@ -13,15 +13,13 @@ import hu.bme.aut.stringartdesigner.databinding.FragmentGeneralSettingsBinding
 import hu.bme.aut.stringartdesigner.model.geometry.Pattern
 import hu.bme.aut.stringartdesigner.view.DrawView
 
-class GeneralSettingsFragment : Fragment() {
+class GeneralSettingsFragment : Fragment(), MainActivity.IMenuEventListener {
     lateinit var binding: FragmentGeneralSettingsBinding
     lateinit var callBack : UIFragment.IPatternChanged
-    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGeneralSettingsBinding.inflate(inflater, container, false)
-        sharedPreferences = (host as MainActivity).getPreferences(Context.MODE_PRIVATE)
 
         val polygonN = binding.polygonN
         polygonN.minValue = 3
@@ -58,18 +56,20 @@ class GeneralSettingsFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callBack = host as MainActivity
+        (host as MainActivity).addMenuListener(this)
     }
     override fun onResume() {
-        getPreferences()
+        loadPattern("persistent")
         super.onResume()
     }
 
     override fun onPause() {
-        savePreferences()
+        savePattern("persistent")
         super.onPause()
     }
 
-    private fun savePreferences() {
+    override fun savePattern(name: String) {
+        val sharedPreferences = requireActivity().getSharedPreferences(name,Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             putInt("polygon_n",binding.polygonN.value)
             putInt("point_count",binding.points.value)
@@ -78,7 +78,8 @@ class GeneralSettingsFragment : Fragment() {
         }
     }
 
-    private fun getPreferences() {
+    override fun loadPattern(name: String) {
+        val sharedPreferences = requireActivity().getSharedPreferences(name,Context.MODE_PRIVATE)
         val defaultPN:Int = resources.getInteger(R.integer.default_value_polygonN)
         binding.polygonN.value = sharedPreferences.getInt("polygon_n",defaultPN)
         val defaultPC:Int = resources.getInteger(R.integer.default_value_number_of_points)

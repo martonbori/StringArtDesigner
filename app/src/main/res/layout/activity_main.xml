@@ -3,20 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="2">
+    android:weightSum="100">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:colorPrimary"/>
     <fragment
         android:id="@+id/canvas_fragment"
         class="hu.bme.aut.stringartdesigner.fragments.CanvasFragment"
-        android:layout_weight="1"
+        android:layout_weight="45"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
     <fragment
         android:id="@+id/ui_fragment"
         class="hu.bme.aut.stringartdesigner.fragments.UIFragment"
-        android:layout_weight="1"
+        android:layout_weight="55"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
+
 
 </LinearLayout>

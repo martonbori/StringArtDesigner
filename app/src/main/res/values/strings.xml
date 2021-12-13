@@ -18,4 +18,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="animateBtnText">ANIMATE</string>
+    <string name="menu">Menu</string>
+    <string name="save">SAVE</string>
+    <string name="load">LOAD</string>
+    <string name="name">Name</string>
 </resources>

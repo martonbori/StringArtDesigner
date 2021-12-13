@@ -12,15 +12,13 @@ import hu.bme.aut.stringartdesigner.R
 import hu.bme.aut.stringartdesigner.databinding.FragmentPointFunctionSettingsBinding
 import hu.bme.aut.stringartdesigner.model.geometry.Pattern
 
-class PointFunctionSettingsFragment : Fragment() {
+class PointFunctionSettingsFragment : Fragment(), MainActivity.IMenuEventListener {
     lateinit var binding: FragmentPointFunctionSettingsBinding
     lateinit var callBack : UIFragment.IPatternChanged
-    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPointFunctionSettingsBinding.inflate(inflater, container, false)
-        sharedPreferences = (host as MainActivity).getPreferences(Context.MODE_PRIVATE)
 
         val pointConstantA = binding.pointConstantA
         pointConstantA.minValue = 0
@@ -58,18 +56,20 @@ class PointFunctionSettingsFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callBack = host as MainActivity
+        (host as MainActivity).addMenuListener(this)
     }
     override fun onResume() {
-        getPreferences()
+        loadPattern("persistent")
         super.onResume()
     }
 
     override fun onPause() {
-        savePreferences()
+        savePattern("persistent")
         super.onPause()
     }
 
-    private fun savePreferences() {
+    override fun savePattern(name: String) {
+        val sharedPreferences = requireActivity().getSharedPreferences(name,Context.MODE_PRIVATE)
         val pointConstantA = binding.pointConstantA.value
         val pointConstantB = binding.pointConstantB.value
         val pointConstantC = binding.pointConstantC.value
@@ -82,8 +82,8 @@ class PointFunctionSettingsFragment : Fragment() {
         }
     }
 
-
-    private fun getPreferences() {
+    override fun loadPattern(name: String) {
+        val sharedPreferences = requireActivity().getSharedPreferences(name,Context.MODE_PRIVATE)
         var default:Int = resources.getInteger(R.integer.default_value_point_constant_A)
         binding.pointConstantA.value = sharedPreferences.getInt("point_constant_A",default)
         default = resources.getInteger(R.integer.default_value_point_constant_B)

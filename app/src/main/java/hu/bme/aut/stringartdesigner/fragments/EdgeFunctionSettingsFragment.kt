@@ -12,14 +12,12 @@ import hu.bme.aut.stringartdesigner.R
 import hu.bme.aut.stringartdesigner.databinding.FragmentEdgeFunctionSettingsBinding
 import hu.bme.aut.stringartdesigner.model.geometry.Pattern
 
-class EdgeFunctionSettingsFragment : Fragment() {
+class EdgeFunctionSettingsFragment : Fragment(), MainActivity.IMenuEventListener {
     lateinit var binding: FragmentEdgeFunctionSettingsBinding
     lateinit var callBack : UIFragment.IPatternChanged
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentEdgeFunctionSettingsBinding.inflate(inflater, container, false)
-        sharedPreferences = (host as MainActivity).getPreferences(Context.MODE_PRIVATE)
 
 
         val edgeConstantA = binding.edgeConstantA
@@ -44,12 +42,12 @@ class EdgeFunctionSettingsFragment : Fragment() {
     }
 
     override fun onResume() {
-        getPreferences()
+        loadPattern("persistent")
         super.onResume()
     }
 
     override fun onPause() {
-        savePreferences()
+        savePattern("persistent")
         super.onPause()
     }
 
@@ -68,12 +66,14 @@ class EdgeFunctionSettingsFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callBack = host as MainActivity
+        (host as MainActivity).addMenuListener(this)
     }
 
-    private fun savePreferences() {
+    override fun savePattern(name: String) {
         val edgeConstantA = binding.edgeConstantA.value
         val edgeConstantB = binding.edgeConstantB.value
         val edgeConstantC = binding.edgeConstantC.value
+        val sharedPreferences = requireActivity().getSharedPreferences(name,Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             putInt("edge_constant_A",edgeConstantA)
             putInt("edge_constant_B",edgeConstantB)
@@ -82,7 +82,8 @@ class EdgeFunctionSettingsFragment : Fragment() {
         }
     }
 
-    fun getPreferences() {
+    override fun loadPattern(name: String) {
+        val sharedPreferences = requireActivity().getSharedPreferences(name,Context.MODE_PRIVATE)
         var default:Int = resources.getInteger(R.integer.default_value_edge_constant_A)
         binding.edgeConstantA.value = sharedPreferences.getInt("edge_constant_A",default)
         default = resources.getInteger(R.integer.default_value_edge_constant_B)
