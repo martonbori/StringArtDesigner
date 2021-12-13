@@ -4,8 +4,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DbHelper(context: Context) :
-    SQLiteOpenHelper(context, DbConstants.DATABASE_NAME, null, DbConstants.DATABASE_VERSION) {
+class DbHelper(context: Context, DbName: String) :
+    SQLiteOpenHelper(context, DbName, null, DbConstants.DATABASE_VERSION) {
 
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
         DbConstants.Polygon.onCreate(sqLiteDatabase)

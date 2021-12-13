@@ -80,6 +80,13 @@ class PointFunctionSettingsFragment : Fragment(), MainActivity.IMenuEventListene
             putInt("point_constant_C",pointConstantC)
             apply()
         }
+        val saveFiles = requireActivity().getSharedPreferences("saves",Context.MODE_PRIVATE)
+        if(!saveFiles.all.containsValue(name)) {
+            with(saveFiles.edit()) {
+                putString(saveFiles.all.size.toString(),name)
+                apply()
+            }
+        }
     }
 
     override fun loadPattern(name: String) {

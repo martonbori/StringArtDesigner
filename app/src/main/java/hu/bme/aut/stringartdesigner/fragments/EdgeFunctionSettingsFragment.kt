@@ -80,6 +80,13 @@ class EdgeFunctionSettingsFragment : Fragment(), MainActivity.IMenuEventListener
             putInt("edge_constant_C",edgeConstantC)
             apply()
         }
+        val saveFiles = requireActivity().getSharedPreferences("saves",Context.MODE_PRIVATE)
+        if(!saveFiles.all.containsValue(name)) {
+            with(saveFiles.edit()) {
+                putString(saveFiles.all.size.toString(),name)
+                apply()
+            }
+        }
     }
 
     override fun loadPattern(name: String) {

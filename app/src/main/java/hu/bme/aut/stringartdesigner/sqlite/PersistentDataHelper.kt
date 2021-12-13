@@ -10,9 +10,9 @@ import hu.bme.aut.stringartdesigner.model.geometry.Point
 import hu.bme.aut.stringartdesigner.model.geometry.Polygon
 import hu.bme.aut.stringartdesigner.model.geometry.Position
 
-class PersistentDataHelper(context: Context) {
+class PersistentDataHelper(context: Context, DbName: String) {
     private var database: SQLiteDatabase? = null
-    private val dbHelper: DbHelper = DbHelper(context)
+    private val dbHelper: DbHelper = DbHelper(context, DbName)
 
     private val polygonColumns = arrayOf(
         DbConstants.Polygon.Columns.ID.name,

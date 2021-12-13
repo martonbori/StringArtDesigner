@@ -1,5 +1,6 @@
 package hu.bme.aut.stringartdesigner
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -11,7 +12,10 @@ import hu.bme.aut.stringartdesigner.fragments.*
 import hu.bme.aut.stringartdesigner.model.geometry.Pattern
 import hu.bme.aut.stringartdesigner.sqlite.PersistentDataHelper
 
-class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
+class MainActivity : AppCompatActivity(),
+    UIFragment.IPatternChanged,
+    SavePatternDialogFragment.SavePatternDialogListener,
+    LoadPatternDialogFragment.LoadPatternDialogListener {
 
     lateinit var binding : ActivityMainBinding
     lateinit var canvasFragment: CanvasFragment
@@ -23,10 +27,9 @@ class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
         binding = ActivityMainBinding.inflate(layoutInflater)
         canvasFragment = supportFragmentManager.findFragmentById(R.id.canvas_fragment) as CanvasFragment
         setContentView(binding.root)
+        dataHelper = PersistentDataHelper(this, "persisted")
 
-        dataHelper = PersistentDataHelper(this)
-        dataHelper.open()
-        restorePersistedObjects()
+        loadPattern("persistent")
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val fileMenu: Menu = binding.toolbar.menu
@@ -48,34 +51,36 @@ class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_save -> {
-                savePersistentObjects()
-                savePattern()
+                SavePatternDialogFragment().show(
+                    supportFragmentManager,
+                    SavePatternDialogFragment.TAG
+                )
                 true
             }
             R.id.menu_load -> {
-                restorePersistedObjects()
-                loadPattern()
+                LoadPatternDialogFragment().show(
+                    supportFragmentManager,
+                    LoadPatternDialogFragment.TAG
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun savePattern() {
-        AlertDialog.Builder(this)
-            .setMessage(R.string.are_you_sure_want_to_exit)
-            .setPositiveButton(R.string.ok) { _, _ -> onExit() }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
-
+    private fun savePattern(name: String) {
+        dataHelper = PersistentDataHelper(this, name)
+        savePersistentObjects()
         for(listener in menuListeners) {
-            listener.savePattern("save")
+            listener.savePattern(name)
         }
     }
 
-    private fun loadPattern() {
+    private fun loadPattern(name: String) {
+        dataHelper = PersistentDataHelper(this, name)
+        restorePersistedObjects()
         for(listener in menuListeners) {
-            listener.loadPattern("load")
+            listener.loadPattern(name)
             updateCanvas()
         }
     }
@@ -108,7 +113,7 @@ class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
     }
 
     private fun onExit() {
-        savePersistentObjects()
+        savePattern("persistent")
         finish()
     }
 
@@ -139,6 +144,14 @@ class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
     interface IMenuEventListener {
         fun savePattern(name:String)
         fun loadPattern(name:String)
+    }
+
+    override fun onSaveNameSubmit(name: String) {
+        savePattern(name)
+    }
+
+    override fun onLoadNameSubmit(name: String) {
+        loadPattern(name)
     }
 
 }

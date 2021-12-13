@@ -71,10 +71,17 @@ class GeneralSettingsFragment : Fragment(), MainActivity.IMenuEventListener {
     override fun savePattern(name: String) {
         val sharedPreferences = requireActivity().getSharedPreferences(name,Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
-            putInt("polygon_n",binding.polygonN.value)
-            putInt("point_count",binding.points.value)
-            putBoolean("sandbox_mode",binding.sandbox.isChecked)
+            putInt("polygon_n", binding.polygonN.value)
+            putInt("point_count", binding.points.value)
+            putBoolean("sandbox_mode", binding.sandbox.isChecked)
             apply()
+        }
+        val saveFiles = requireActivity().getSharedPreferences("saves",Context.MODE_PRIVATE)
+        if(!saveFiles.all.containsValue(name)) {
+            with(saveFiles.edit()) {
+                putString(saveFiles.all.size.toString(),name)
+                apply()
+            }
         }
     }
 
