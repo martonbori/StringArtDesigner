@@ -99,4 +99,66 @@ object DbConstants {
             onCreate(database)
         }
     }
+
+    object PointSet {
+        const val DATABASE_TABLE = "pointSet"
+
+        enum class Columns {
+            ID, COORD_X, COORD_Y, EDGE, NUM
+        }
+
+        private val DATABASE_CREATE = """create table if not exists $DATABASE_TABLE (
+            ${Columns.ID.name} integer primary key autoincrement,
+            ${Columns.COORD_X.name} real not null,
+            ${Columns.COORD_Y.name} real not null,
+            ${Columns.EDGE.name} integer not null,
+            ${Columns.NUM.name} integer not null
+            );"""
+
+        private const val DATABASE_DROP = "drop table if exists $DATABASE_TABLE;"
+
+        fun onCreate(database: SQLiteDatabase) {
+            database.execSQL(DATABASE_CREATE)
+        }
+
+        fun onUpgrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+            Log.w(
+                Points::class.java.name,
+                "Upgrading from version $oldVersion to $newVersion"
+            )
+            database.execSQL(DATABASE_DROP)
+            onCreate(database)
+        }
+    }
+    object Patterns {
+        const val DATABASE_TABLE = "patterns"
+
+        enum class Columns {
+            ID, POLYGON_ID, POINTS_ID, LINES_ID
+        }
+
+        private val DATABASE_CREATE ="""create table if not exists $DATABASE_TABLE (
+            ${Columns.ID.name} integer primary key autoincrement,
+            ${Columns.POLYGON_ID.name} real not null,
+            ${Columns.POINTS_ID.name} real not null,
+            ${Columns.LINES_ID.name} real not null
+            );"""
+
+        private const val DATABASE_DROP = "drop table if exists $DATABASE_TABLE;"
+
+        fun onCreate(database: SQLiteDatabase) {
+            database.execSQL(DATABASE_CREATE)
+        }
+
+        fun onUpgrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+            Log.w(
+                Lines::class.java.name,
+                "Upgrading from version $oldVersion to $newVersion"
+            )
+            database.execSQL(DATABASE_DROP)
+            onCreate(database)
+        }
+    }
+
+
 }
