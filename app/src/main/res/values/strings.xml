@@ -17,4 +17,5 @@
     <string name="are_you_sure_want_to_exit">Are you sure you want to exit the app?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="animateBtnText">ANIMATE</string>
 </resources>

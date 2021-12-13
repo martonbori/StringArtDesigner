@@ -30,6 +30,7 @@ class UIFragment : Fragment() {
     }
     interface IPatternChanged {
         fun updateCanvas()
+        fun animatePattern()
     }
 
 }

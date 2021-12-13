@@ -25,10 +25,10 @@ object Pattern {
         pointCount = pointCnt
         for((j, e) in polygon.getEdges().withIndex()) {
             val startPos = Position(e.start.x, e.start.y)
-            val gap = e.getLength() / (pointCnt+1)
+            val gap = e.length / (pointCnt+1)
             for (i in 0 until pointCnt) {
                 points[Pair(j,i)] =
-                    Point(startPos.translateBy(e.getDirectionVector()*(gap*(i+1))),j,i)
+                    Point(startPos.translateBy(e.directionVector*(gap*(i+1))),j,i)
             }
         }
         setLines()
@@ -109,7 +109,7 @@ object Pattern {
     fun scaleBy(alpha:Float) {
         for (point in points.values) {
             val fromCenterToPoint = Line (canvasCenter, point.pos)
-            point.pos = point.pos.translateBy(fromCenterToPoint.getDirectionVector()*fromCenterToPoint.getLength()*(alpha-1))
+            point.pos = point.pos.translateBy(fromCenterToPoint.directionVector*fromCenterToPoint.length*(alpha-1))
         }
     }
 

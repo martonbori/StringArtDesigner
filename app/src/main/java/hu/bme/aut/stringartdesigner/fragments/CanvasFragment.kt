@@ -31,5 +31,8 @@ class CanvasFragment : Fragment(){
         binding.drawView.invalidate()
     }
 
+    fun animatePattern() {
+        binding.drawView.animatePattern()
+    }
 
 }

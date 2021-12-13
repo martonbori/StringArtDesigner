@@ -1,5 +1,7 @@
 package hu.bme.aut.stringartdesigner.view
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -12,6 +14,7 @@ import hu.bme.aut.stringartdesigner.model.geometry.Line
 import hu.bme.aut.stringartdesigner.model.geometry.Pattern
 import hu.bme.aut.stringartdesigner.model.geometry.Point
 import hu.bme.aut.stringartdesigner.model.geometry.Position
+import java.lang.Math.abs
 
 class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
 
@@ -31,10 +34,35 @@ class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
         invalidate()
     }
 
+    fun animatePattern() {
+        val lines = Pattern.lines
+        lines.addAll(Pattern.plusLines)
+        for(line in lines) {
+            ObjectAnimator.ofFloat(line,"displayLength", 0f, line.length).apply {
+                duration = 2000
+                start()
+                addUpdateListener { updatedAnimation ->
+                    invalidate()
+                }
+            }
+        }
+/*        Pattern.setPointExpression("num+0")
+        ValueAnimator.ofInt(-50, 25).apply {
+            duration = 5000
+            start()
+            addUpdateListener { updatedAnimation ->
+                val value = kotlin.math.abs(updatedAnimation.animatedValue as Int)
+                Pattern.setEdgeExpression("edge+$value")
+                Pattern.setPointExpression("num+$value")
+                invalidate()
+            }
+        }*/
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (line in Pattern.polygon.getEdges()) {
-            drawLine(canvas,line)
+            drawLine(canvas, line)
         }
         for (point in Pattern.points.values) {
             drawPoint(canvas, point)
@@ -43,7 +71,7 @@ class DrawView(ctx: Context?, attrs: AttributeSet?) : View(ctx,attrs) {
             drawLine(canvas, line)
         }
         for (line in Pattern.plusLines) {
-            drawLine(canvas, line)
+          drawLine(canvas, line)
         }
         currentLine?.let { drawLine(canvas, it) }
     }

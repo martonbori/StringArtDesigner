@@ -46,6 +46,12 @@ class GeneralSettingsFragment : Fragment() {
             callBack.updateCanvas()
         }
 
+        val animateBtn = binding.animateBtn
+        animateBtn.setOnClickListener {
+            callBack.animatePattern()
+        }
+
+
         return binding.root
     }
 

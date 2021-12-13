@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity(), UIFragment.IPatternChanged {
         canvasFragment.update()
     }
 
+    override fun animatePattern() {
+        canvasFragment.animatePattern()
+    }
+
     override fun onResume() {
         super.onResume()
         dataHelper.open()
